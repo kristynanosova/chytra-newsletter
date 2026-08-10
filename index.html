@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Newsletter Chytrá organizace</title>
+  <style>
+    /* =====================================================
+       GLOBÁLNÍ RESET — nutný pro emailové klienty
+    ===================================================== */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; background-color: #f4f4f4; }
+
+    /* =====================================================
+       RESPONZIVNÍ STYL — funguje v náhledu na webu
+    ===================================================== */
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .section-padding { padding: 24px 16px !important; }
+      .hero-title { font-size: 26px !important; }
+      .hide-mobile { display: none !important; }
+      .stack-column { display: block !important; width: 100% !important; }
+    }
+
+    /* =====================================================
+       STYLY PRO WEBOVÝ NÁHLED
+    ===================================================== */
+    * { box-sizing: border-box; }
+    a { color: #9E76F0; }
+    a:hover { color: #FDD801; }
+
+    .preview-bar {
+      background: #192231;
+      color: #9E76F0;
+      font-family: monospace;
+      font-size: 13px;
+      padding: 10px 20px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .preview-bar span { color: #FDD801; font-weight: bold; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f0f0f0;">
+
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║  NEWSLETTER CHYTRÁ ORGANIZACE — EDITOVATELNÁ ŠABLONA         ║
+  ║                                                               ║
+  ║  JAK EDITOVAT:                                                ║
+  ║  1. Klikni na tužku (Edit this file) na GitHubu              ║
+  ║  2. Najdi sekci podle komentáře <!-- ✏️ EDITUJ: ... -->       ║
+  ║  3. Změň text mezi značkami                                   ║
+  ║  4. Klikni "Commit changes" dole                              ║
+  ║  5. Zkopíruj HTML do Mailchimp / Ecomail a odešli             ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+
+<!-- ✏️ EDITUJ: Číslo a měsíc newsletteru -->
+<!-- Zobrazí se jen v náhledu na webu, ne v emailu -->
+<div class="preview-bar">
+  🔍 NÁHLED — Newsletter Chytrá organizace &nbsp;|&nbsp;
+  <span>Číslo 01 / Září 2026</span> &nbsp;|&nbsp;
+  Toto je webový náhled — do emailu se lišta nevloží
+</div>
+
+<!-- OBAL — celá šířka -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#f0f0f0;">
+  <tr>
+    <td align="center" style="padding: 30px 10px;">
+
+      <!-- EMAIL KONTEJNER — max 600px -->
+      <table class="email-container" role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:12px; overflow:hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12);">
+
+        <!-- ═══════════════════════════════════════════════
+             ZÁHLAVÍ — HEADER
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td style="background-color:#192231; padding: 36px 40px 28px 40px;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td>
+                  <!-- Logo -->
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td style="vertical-align: middle;">
+                        <!-- Ikona žárovky (SVG inline) -->
+                        <div style="display:inline-block; width:44px; height:44px; background-color:#FDD801; border-radius:50%; text-align:center; line-height:44px; font-size:22px; vertical-align:middle;">💡</div>
+                      </td>
+                      <td style="vertical-align: middle; padding-left: 12px;">
+                        <!-- ✏️ EDITUJ: Název firmy v záhlaví -->
+                        <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 0.3px; line-height:1;">Chytrá organizace</div>
+                        <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; color: #9E76F0; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px;">Jeden systém pro všechny</div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td align="right" style="vertical-align: middle;">
+                  <!-- ✏️ EDITUJ: Číslo a měsíc -->
+                  <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; color: #9E76F0; letter-spacing: 1px; text-transform: uppercase;">Newsletter</div>
+                  <div style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 700; color: #FDD801; margin-top:2px;">Září 2026 · č. 01</div>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Dekorativní linka -->
+            <div style="height:2px; background: linear-gradient(90deg, #FDD801 0%, #9E76F0 60%, transparent 100%); margin-top: 24px; border-radius:2px;"></div>
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 1 — SLOVO OD KRISTÝNY
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td class="section-padding" style="padding: 36px 40px 28px 40px; background-color: #ffffff;">
+
+            <!-- Nadpis sekce -->
+            <div style="display:inline-block; background-color:#FDD801; color:#192231; font-family:'Segoe UI',Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:16px;">
+              📌 Slovo od Kristýny
+            </div>
+
+            <!-- ✏️ EDITUJ: Osobní úvod -->
+            <h2 style="font-family:'Segoe UI',Arial,sans-serif; font-size:22px; font-weight:700; color:#192231; margin:0 0 16px 0; line-height:1.3;">
+              Vítejte u prvního vydání našeho newsletteru! 👋
+            </h2>
+
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 12px 0;">
+              Milí přátelé ze sociálních služeb,
+            </p>
+
+            <!-- ✏️ EDITUJ: Text uvítání — max 5 vět -->
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 12px 0;">
+              Tohle je naše první číslo a upřímně — jsem z toho trochu nervózní. Ale hlavně nadšená. Rozhodla jsem se vám každý měsíc psát o tom, co nás v Chytré zaměstnává, co se v systému mění a co se děje za dveřmi naší kanceláře. Protože věřím, že software dělají lidé — a vy máte právo vědět, kdo za ním stojí.
+            </p>
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 0 0;">
+              Budu ráda, když mi napíšete, co by se vám v newsletteru líbilo víc (nebo míň). Tohle totiž děláme pro vás.
+            </p>
+
+            <!-- Podpis -->
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+              <tr>
+                <td style="vertical-align:middle;">
+                  <!-- ✏️ EDITUJ: Iniciály nebo foto (nahraď src) -->
+                  <div style="width:44px; height:44px; background: linear-gradient(135deg, #9E76F0, #192231); border-radius:50%; text-align:center; line-height:44px; font-family:'Segoe UI',Arial,sans-serif; font-size:16px; font-weight:700; color:#FDD801;">K</div>
+                </td>
+                <td style="vertical-align:middle; padding-left:12px;">
+                  <!-- ✏️ EDITUJ: Jméno a pozice -->
+                  <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:700; color:#192231;">Kristýna Nosová</div>
+                  <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:12px; color:#9E76F0;">Chytrá organizace</div>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- Oddělovač -->
+        <tr><td style="padding:0 40px;"><div style="height:1px; background-color:#EAEAEA;"></div></td></tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 2 — TÉMA ČÍSLA (hlavní článek)
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td class="section-padding" style="padding: 32px 40px; background-color: #ffffff;">
+
+            <div style="display:inline-block; background-color:#192231; color:#FDD801; font-family:'Segoe UI',Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:16px;">
+              🔍 Téma čísla
+            </div>
+
+            <!-- ✏️ EDITUJ: Nadpis hlavního článku -->
+            <h2 style="font-family:'Segoe UI',Arial,sans-serif; font-size:20px; font-weight:700; color:#192231; margin:0 0 16px 0; line-height:1.3;">
+              Proč jsme vytvořili Chytrou organizaci aneb příběh, který začal frustrací
+            </h2>
+
+            <!-- ✏️ EDITUJ: Obsah hlavního článku (300–500 slov, rozděl do odstavců) -->
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 14px 0;">
+              Bylo to v roce 2021 a já seděla v kanceláři ředitelky jednoho domova pro seniory. Přede mnou ležely čtyři různé excelovské tabulky, dvě složky s papírovými žádankami o dovolenou a post-it lístek s heslem k systému, který nikdo neuměl pořádně ovládat. „Tohle nemůže být normální," pomyslela jsem si.
+            </p>
+
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 14px 0;">
+              Sociální služby v Česku odvádějí neuvěřitelnou práci. Pečují o naše rodiče, prarodiče, o lidi, kteří pomoc skutečně potřebují. Přitom administrativní zátěž, která na ně dopadá, je obrovská — a systémy, které by ji měly ulehčit, tomu buď nerozumí, nebo jsou zbytečně složité.
+            </p>
+
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 14px 0;">
+              Tak vznikla myšlenka Chytré organizace: jeden systém, navržený přímo pro sociální služby, který řeší dokumentaci klientů, plánování směn, autoprovoz, stravování i komunikaci s úřady — pod jednou střechou.
+            </p>
+
+            <!-- Citát / zvýrazněný blok -->
+            <div style="border-left: 4px solid #FDD801; background-color:#fffdf0; padding: 16px 20px; margin: 20px 0; border-radius:0 8px 8px 0;">
+              <!-- ✏️ EDITUJ: Klíčová myšlenka článku -->
+              <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:16px; font-weight:600; color:#192231; line-height:1.5; margin:0; font-style:italic;">
+                „Věříme, že pokud ušetříme sociálním pracovníkům hodinu administrativy denně, ta hodina půjde zpět ke klientům. A to je přesně to, co chceme."
+              </p>
+            </div>
+
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0;">
+              V příštích číslech vám budeme postupně představovat jednotlivé moduly systému, sdílet příběhy organizací, které s námi pracují, a přinášet praktické tipy pro každodenní provoz. Rádi vás budeme mít s sebou na téhle cestě.
+            </p>
+
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 3 — NOVINKY V SYSTÉMU
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td style="padding: 0; background-color: #192231;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td class="section-padding" style="padding: 32px 40px;">
+
+                  <div style="display:inline-block; background-color:#FDD801; color:#192231; font-family:'Segoe UI',Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:16px;">
+                    🆕 Co je nového v systému
+                  </div>
+
+                  <!-- ✏️ EDITUJ: Nadpis sekce novinek -->
+                  <h2 style="font-family:'Segoe UI',Arial,sans-serif; font-size:18px; font-weight:700; color:#ffffff; margin:0 0 20px 0;">
+                    Přidali jsme 3 novinky, o které jste žádali
+                  </h2>
+
+                  <!-- Novinka 1 -->
+                  <!-- ✏️ EDITUJ: Každá novinka — ikona, název, popis -->
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:16px;">
+                    <tr>
+                      <td width="36" style="vertical-align:top; padding-top:2px;">
+                        <div style="width:28px; height:28px; background-color:#FDD801; border-radius:6px; text-align:center; line-height:28px; font-size:14px;">✨</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:12px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:700; color:#FDD801; margin-bottom:4px;">Nový design denního plánu</div>
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:13px; color:#EAEAEA; line-height:1.6;">Přehledná timeline s barevným rozlišením směn. Ocení ho zejména vedoucí přímé péče.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Novinka 2 -->
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:16px;">
+                    <tr>
+                      <td width="36" style="vertical-align:top; padding-top:2px;">
+                        <div style="width:28px; height:28px; background-color:#9E76F0; border-radius:6px; text-align:center; line-height:28px; font-size:14px;">🤖</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:12px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:700; color:#FDD801; margin-bottom:4px;">AI návrh individuálního plánu</div>
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:13px; color:#EAEAEA; line-height:1.6;">Na základě mapování potřeb klienta systém navrhne osnovu individuálního plánu. Sociální pracovník ji pak doupraví.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Novinka 3 -->
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:0;">
+                    <tr>
+                      <td width="36" style="vertical-align:top; padding-top:2px;">
+                        <div style="width:28px; height:28px; background-color:#FDD801; border-radius:6px; text-align:center; line-height:28px; font-size:14px;">📱</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:12px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:700; color:#FDD801; margin-bottom:4px;">Mobilní evakuační SOS seznam</div>
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:13px; color:#EAEAEA; line-height:1.6;">Aktuální seznam klientů a jejich umístění dostupný na telefonu i bez internetu. Pro nouzové situace.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 4 — ZE ZÁKULISÍ
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td class="section-padding" style="padding: 32px 40px; background-color: #fffdf5;">
+
+            <div style="display:inline-block; background-color:#9E76F0; color:#ffffff; font-family:'Segoe UI',Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:16px;">
+              👀 Ze zákulisí Chytré
+            </div>
+
+            <!-- ✏️ EDITUJ: Nadpis zákulisní sekce -->
+            <h2 style="font-family:'Segoe UI',Arial,sans-serif; font-size:18px; font-weight:700; color:#192231; margin:0 0 16px 0;">
+              Kdo za Chytrou stojí? Dovolte, ať se představíme 🙋‍♀️
+            </h2>
+
+            <!-- Zákulisní příběh — tabulka s fotkou -->
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td style="vertical-align:top;">
+
+                  <!-- ✏️ EDITUJ: Text zákulisního příběhu -->
+                  <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 14px 0;">
+                    Pracujeme v malém, ale urputném týmu. Každý ráno začínáme kávou a krátkým stand-upem — co kdo řeší, co ho blokuje, co se povedlo. Říkáme tomu „ranní synchronizace" a upřímně — je to nejlepší část dne.
+                  </p>
+
+                  <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#444444; line-height:1.7; margin:0 0 14px 0;">
+                    Tenhle měsíc nás potěšilo, když nám napsala ředitelka jednoho domova pro seniory na Moravě: <em>„Poprvé za 10 let jsem odešla z práce ve čtyři odpoledne. Díky systému to jde."</em> Pro takové momenty to celé děláme.
+                  </p>
+
+                  <!-- ✏️ EDITUJ: Fotka ze zákulisí — sem vlož src="URL_FOTKY" -->
+                  <!-- Placeholder — nahraď URL skutečnou fotkou -->
+                  <div style="background: linear-gradient(135deg, #192231 0%, #2d3a4d 100%); border-radius:10px; padding:30px; text-align:center; margin:16px 0;">
+                    <div style="font-size:40px; margin-bottom:8px;">📸</div>
+                    <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:13px; color:#9E76F0; font-style:italic;">
+                      <!-- ✏️ EDITUJ: Popis fotky nebo nahraď celý div tagem img -->
+                      Sem vlož fotku z kanceláře — stačí přidat: &lt;img src="URL" width="520" /&gt;
+                    </div>
+                  </div>
+                  <!-- PŘÍKLAD S FOTKOU (odkomentuj a vlož URL):
+                  <img src="https://tvoje-foto-url.com/foto.jpg" width="520" style="border-radius:10px; max-width:100%;" alt="Tým Chytrá organizace" />
+                  -->
+
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Oddělovač -->
+        <tr><td style="padding:0 40px;"><div style="height:1px; background-color:#EAEAEA;"></div></td></tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 5 — HLAS KLIENTA (citát)
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td class="section-padding" style="padding: 32px 40px; background-color:#ffffff;">
+
+            <div style="display:inline-block; background-color:#EAEAEA; color:#192231; font-family:'Segoe UI',Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:20px;">
+              💬 Hlas klienta
+            </div>
+
+            <!-- Citát -->
+            <div style="position:relative; padding: 24px 28px; background: linear-gradient(135deg, #f8f4ff 0%, #fff9f0 100%); border-radius:12px; border: 1px solid #EAEAEA;">
+
+              <!-- Uvozovky dekorativní -->
+              <div style="font-family:Georgia,serif; font-size:60px; color:#9E76F0; line-height:0.5; margin-bottom:16px; opacity:0.4;">"</div>
+
+              <!-- ✏️ EDITUJ: Citát klienta -->
+              <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:17px; color:#192231; line-height:1.6; margin:0 0 20px 0; font-style:italic; font-weight:500;">
+                Konečně máme jeden systém, kde je všechno. Nemusíme přepínat mezi čtyřmi programy, hledat papíry a přepisovat data z jednoho místa na druhé. Ušetřili jsme minimálně dvě hodiny denně na oddělení.
+              </p>
+
+              <!-- Autor citátu -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <!-- ✏️ EDITUJ: Iniciály autora citátu -->
+                    <div style="width:38px; height:38px; background-color:#9E76F0; border-radius:50%; text-align:center; line-height:38px; font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:700; color:#ffffff;">M</div>
+                  </td>
+                  <td style="vertical-align:middle; padding-left:12px;">
+                    <!-- ✏️ EDITUJ: Jméno, pozice a organizace -->
+                    <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:13px; font-weight:700; color:#192231;">Mgr. Marie Horáková</div>
+                    <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:12px; color:#9E76F0;">Ředitelka · Domov sv. Jiří, Brno</div>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 6 — TIP MĚSÍCE
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td style="padding: 0; background-color: #9E76F0;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td class="section-padding" style="padding: 32px 40px;">
+
+                  <div style="display:inline-block; background-color:#FDD801; color:#192231; font-family:'Segoe UI',Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:16px;">
+                    📅 Tip měsíce
+                  </div>
+
+                  <!-- ✏️ EDITUJ: Nadpis tipu měsíce -->
+                  <h2 style="font-family:'Segoe UI',Arial,sans-serif; font-size:18px; font-weight:700; color:#ffffff; margin:0 0 20px 0;">
+                    5 věcí, které zkontrolujte před každou inspekcí
+                  </h2>
+
+                  <!-- ✏️ EDITUJ: Body tipu — přidej nebo odeber řádky -->
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                    <!-- Tip 1 -->
+                    <tr>
+                      <td width="30" style="vertical-align:top; padding-bottom:14px; padding-top:2px;">
+                        <div style="width:24px; height:24px; background-color:#FDD801; border-radius:50%; text-align:center; line-height:24px; font-family:'Segoe UI',Arial,sans-serif; font-size:12px; font-weight:700; color:#192231;">1</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:10px; padding-bottom:14px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; color:#ffffff; line-height:1.6;">
+                          <strong style="color:#FDD801;">Individuální plány</strong> — jsou aktuální, podepsané klientem a revidované?
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Tip 2 -->
+                    <tr>
+                      <td width="30" style="vertical-align:top; padding-bottom:14px; padding-top:2px;">
+                        <div style="width:24px; height:24px; background-color:#FDD801; border-radius:50%; text-align:center; line-height:24px; font-family:'Segoe UI',Arial,sans-serif; font-size:12px; font-weight:700; color:#192231;">2</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:10px; padding-bottom:14px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; color:#ffffff; line-height:1.6;">
+                          <strong style="color:#FDD801;">Záznamy o přímé péči</strong> — jsou vedeny průběžně, nebo se doplňují zpětně?
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Tip 3 -->
+                    <tr>
+                      <td width="30" style="vertical-align:top; padding-bottom:14px; padding-top:2px;">
+                        <div style="width:24px; height:24px; background-color:#FDD801; border-radius:50%; text-align:center; line-height:24px; font-family:'Segoe UI',Arial,sans-serif; font-size:12px; font-weight:700; color:#192231;">3</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:10px; padding-bottom:14px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; color:#ffffff; line-height:1.6;">
+                          <strong style="color:#FDD801;">Smlouvy s klienty</strong> — odpovídají aktuálnímu sazebníku a metodice?
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Tip 4 -->
+                    <tr>
+                      <td width="30" style="vertical-align:top; padding-bottom:14px; padding-top:2px;">
+                        <div style="width:24px; height:24px; background-color:#FDD801; border-radius:50%; text-align:center; line-height:24px; font-family:'Segoe UI',Arial,sans-serif; font-size:12px; font-weight:700; color:#192231;">4</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:10px; padding-bottom:14px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; color:#ffffff; line-height:1.6;">
+                          <strong style="color:#FDD801;">Stížnostní protokol</strong> — víte, kde je a jak postupovat, když ho inspektor hledá?
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Tip 5 -->
+                    <tr>
+                      <td width="30" style="vertical-align:top; padding-top:2px;">
+                        <div style="width:24px; height:24px; background-color:#FDD801; border-radius:50%; text-align:center; line-height:24px; font-family:'Segoe UI',Arial,sans-serif; font-size:12px; font-weight:700; color:#192231;">5</div>
+                      </td>
+                      <td style="vertical-align:top; padding-left:10px;">
+                        <div style="font-family:'Segoe UI',Arial,sans-serif; font-size:14px; color:#ffffff; line-height:1.6;">
+                          <strong style="color:#FDD801;">Zálohy a přístupnost dat</strong> — máte jistotu, že k datům se dostanete i bez internetu?
+                        </div>
+                      </td>
+                    </tr>
+
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════
+             SEKCE 7 — VÝZVA K AKCI (CTA)
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td class="section-padding" style="padding: 40px 40px; background-color: #ffffff; text-align: center;">
+
+            <!-- ✏️ EDITUJ: Hlavní CTA text -->
+            <h2 style="font-family:'Segoe UI',Arial,sans-serif; font-size:22px; font-weight:700; color:#192231; margin:0 0 12px 0;">
+              Chcete to vidět v akci?
+            </h2>
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:15px; color:#666666; line-height:1.6; margin:0 0 28px 0; max-width:400px; margin-left:auto; margin-right:auto;">
+              Připravili jsme pro vás nezávazné demo zdarma. Za 30 minut vám ukážeme, jak systém funguje v praxi.
+            </p>
+
+            <!-- CTA Tlačítko -->
+            <!-- ✏️ EDITUJ: href — vlož správný odkaz na demo -->
+            <a href="https://www.chytraorganizace.cz/demo"
+               style="display:inline-block; background: linear-gradient(135deg, #FDD801 0%, #f5c800 100%); color:#192231; font-family:'Segoe UI',Arial,sans-serif; font-size:16px; font-weight:700; text-decoration:none; padding:16px 40px; border-radius:50px; letter-spacing:0.5px; box-shadow: 0 4px 16px rgba(253,216,1,0.4);">
+              🚀 Vyzkoušet demo zdarma
+            </a>
+
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:12px; color:#999999; margin:16px 0 0 0;">
+              Bez závazků · Bez instalace · Stačí 30 minut
+            </p>
+
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════
+             ZÁPATÍ — FOOTER
+        ═══════════════════════════════════════════════ -->
+        <tr>
+          <td style="background-color:#192231; padding: 28px 40px; text-align:center;">
+
+            <!-- Logo v zápatí -->
+            <div style="margin-bottom:16px;">
+              <span style="font-family:'Segoe UI',Arial,sans-serif; font-size:16px; font-weight:700; color:#ffffff;">💡 Chytrá organizace</span>
+            </div>
+
+            <!-- Kontaktní info -->
+            <!-- ✏️ EDITUJ: Kontakty -->
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:12px; color:#9E76F0; margin:0 0 8px 0;">
+              <a href="https://www.chytraorganizace.cz" style="color:#FDD801; text-decoration:none;">www.chytraorganizace.cz</a>
+              &nbsp;·&nbsp;
+              <a href="tel:+420778707176" style="color:#9E76F0; text-decoration:none;">+420 778 707 176</a>
+            </p>
+
+            <!-- Sociální sítě -->
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:12px; color:#666666; margin:0 0 20px 0;">
+              <!-- ✏️ EDITUJ: LinkedIn odkaz -->
+              <a href="https://linkedin.com/company/chytraorganizace" style="color:#9E76F0; text-decoration:none;">LinkedIn</a>
+            </p>
+
+            <!-- Linka -->
+            <div style="height:1px; background-color:#2d3a4d; margin:0 0 16px 0;"></div>
+
+            <!-- GDPR / Odhlášení -->
+            <p style="font-family:'Segoe UI',Arial,sans-serif; font-size:11px; color:#444444; margin:0; line-height:1.6;">
+              Tento newsletter dostáváte, protože jste vyjádřili zájem o systém Chytrá organizace.<br />
+              <!-- ✏️ EDITUJ: Odkaz na odhlášení — v Mailchimp/Ecomail se automaticky doplní -->
+              <a href="*|UNSUB|*" style="color:#666666; text-decoration:underline;">Odhlásit odběr</a>
+              &nbsp;·&nbsp;
+              <a href="https://www.chytraorganizace.cz/gdpr" style="color:#666666; text-decoration:underline;">Zásady ochrany osobních údajů</a>
+            </p>
+
+          </td>
+        </tr>
+
+      </table>
+      <!-- KONEC EMAIL KONTEJNERU -->
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
