@@ -1,24 +1,400 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chytrá organizace — Visual Newsletter Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      height: 56px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      width: 32px; height: 32px;
+      background: #facc15;
+      color: #0f172a;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #facc15;
+      color: #0f172a;
+    }
+    .btn-primary:hover { background: #eab308; }
+
+    .btn-secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+    .btn-secondary:hover { background: #475569; }
+
+    /* LAYOUT */
+    .workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* SIDEBAR EDIT PANEL */
+    .edit-panel {
+      width: 440px;
+      background: #1e293b;
+      border-right: 1px solid #334155;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+
+    .field-input, .field-textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #f8fafc;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-input:focus, .field-textarea:focus {
+      border-color: #facc15;
+    }
+
+    .field-textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+
+    .upload-box {
+      border: 2px dashed #334155;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #0f172a;
+      transition: all 0.2s;
+    }
+    .upload-box:hover { border-color: #facc15; }
+    .upload-icon { font-size: 24px; margin-bottom: 6px; }
+    .upload-text { font-size: 12px; color: #94a3b8; }
+
+    /* PREVIEW PANEL */
+    .preview-panel {
+      flex: 1;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .preview-header {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .email-frame {
+      width: 600px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #22c55e;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1000;
+    }
+    .toast.show { display: block; animation: fadeIn 0.3s forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo-badge">💡</div>
+      <span class="brand-title">Chytrá organizace — Visual Newsletter Studio</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-secondary" onclick="copyHTML()">
+        📋 Kopírovat HTML kód (pro Ecomail / Mailchimp)
+      </button>
+      <button class="btn btn-primary" onclick="downloadHTML()">
+        📥 Stáhnout newsletter.html
+      </button>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <!-- EDIT PANEL -->
+    <aside class="edit-panel">
+      
+      <!-- Hlavička -->
+      <div>
+        <div class="section-title">📌 Vydání & Hlavička</div>
+        <div class="field-group">
+          <label class="field-label">Měsíc a číslo vydání</label>
+          <input type="text" id="inp-issue" class="field-input" value="Září 2026 · č. 01" oninput="updatePreview()">
+        </div>
+      </div>
+
+      <!-- Úvod od Kristýny -->
+      <div>
+        <div class="section-title">✍️ Úvod od Kristýny (Virální copy)</div>
+        <div class="field-group">
+          <label class="field-label">Hlavní Hook (Nadpis úvodu)</label>
+          <textarea id="inp-hook" class="field-textarea" style="min-height:50px;" oninput="updatePreview()">KRADOU VÁM 2 HODINY DENNĚ. A VY O TOM MOŽNÁ ANI NEVÍTE. 🛑</textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Text úvodu (Příběh & Hodnota)</label>
+          <textarea id="inp-intro-text" class="field-textarea" style="min-height:120px;" oninput="updatePreview()">Minulý týden jsem seděla s ředitelkou pobytové služby na Moravě. Byla 17:30. Kancelář už byla úplně tichá. 
+Ale ona dál seděla u stolu. Oči zarudlé od monitoru. Překlikávala mezi 4 různými tabulkami a starým systémem.
+
+Řekla mi větu, ze které mrazí: „Šla jsem do sociálních služeb pomáhat lidem. Ale 60 % času trávím jako administrativní stroj."
+
+Právě proto jsme vytvořili Chytrou organizaci. Abychom vrátili sociálním pracovníkům čas na to, co má skutečný smysl — na klienty.</textarea>
+        </div>
+      </div>
+
+      <!-- Téma čísla -->
+      <div>
+        <div class="section-title">🧠 Téma čísla (Hlavní karta)</div>
+        <div class="field-group">
+          <label class="field-label">Nadpis hlavního tématu</label>
+          <input type="text" id="inp-topic-title" class="field-input" value="Jak automatizace dokumentace chrání tým před vyhořením" oninput="updatePreview()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Perex hlavního tématu</label>
+          <textarea id="inp-topic-perex" class="field-textarea" oninput="updatePreview()">Chaos v výkaznictví a neustálé dohledávání podkladů pro inspekci MPSV jsou primární příčinou chronického stresu na pracovišti. Podívejte se, jak 1 moderní ekosystém nahradí 4 zastaralé programy.</textarea>
+        </div>
+      </div>
+
+      <!-- Novinky v systému -->
+      <div>
+        <div class="section-title">⚡ Novinky v systému (2 karty)</div>
+        <div class="field-group">
+          <label class="field-label">Novinka 1: Název & Popis</label>
+          <input type="text" id="inp-n1-title" class="field-input" value="Smart Výkazy péče na 1 klik" oninput="updatePreview()">
+          <input type="text" id="inp-n1-desc" class="field-input" style="margin-top:4px;" value="Automatické generování podkladů pro dotační řízení a výkazy dotací bez chyb." oninput="updatePreview()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Novinka 2: Název & Popis</label>
+          <input type="text" id="inp-n2-title" class="field-input" value="AI Návrh Individuálního plánu" oninput="updatePreview()">
+          <input type="text" id="inp-n2-desc" class="field-input" style="margin-top:4px;" value="Systém předpřipraví návrh IP na základě zadaných potřeb. Ušetří 70 % času." oninput="updatePreview()">
+        </div>
+      </div>
+
+      <!-- Tip měsíce -->
+      <div>
+        <div class="section-title">💡 Tip měsíce (Auditing checklist)</div>
+        <div class="field-group">
+          <label class="field-label">Bod 1 (Název & Popis)</label>
+          <input type="text" id="inp-t1-title" class="field-input" value="Aktualita IP" oninput="updatePreview()">
+          <input type="text" id="inp-t1-desc" class="field-input" style="margin-top:4px;" value="Jsou všechny individuální plány podepsané a revidované v termínu?" oninput="updatePreview()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Bod 2 (Název & Popis)</label>
+          <input type="text" id="inp-t2-title" class="field-input" value="Průběžná péče" oninput="updatePreview()">
+          <input type="text" id="inp-t2-desc" class="field-input" style="margin-top:4px;" value="Záznamy jsou doplňovány denně v reálném čase, ne zpětně." oninput="updatePreview()">
+        </div>
+      </div>
+
+      <!-- Hlas klienta / Citát -->
+      <div>
+        <div class="section-title">⭐ Hlas z praxe (Citát)</div>
+        <div class="field-group">
+          <label class="field-label">Citát klienta</label>
+          <textarea id="inp-quote-text" class="field-textarea" oninput="updatePreview()">Poprvé za 8 let v pozici ředitelky odcházím v pátek v 15:30 s čistou hlavou. Všechny podklady máme v jednom systému a inspekce proběhla bez jediného nálezu.</textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Autor & Organizace</label>
+          <input type="text" id="inp-quote-author" class="field-input" value="Mgr. Marie Horáková · Domov sv. Jiří, Brno" oninput="updatePreview()">
+        </div>
+      </div>
+
+      <!-- Fotka ze zákulisí -->
+      <div>
+        <div class="section-title">📸 Fotka ze zákulisí</div>
+        <div class="upload-box" onclick="document.getElementById('inp-file').click()">
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-text">Klikněte pro nahrání fotky týmu / z práce</div>
+        </div>
+        <input type="file" id="inp-file" accept="image/*" style="display:none;" onchange="handleImage(this.files[0])">
+      </div>
+
+    </aside>
+
+    <!-- PREVIEW PANEL -->
+    <main class="preview-panel">
+      <div class="preview-header">📱 Živý náhled e-mailu (aktualizuje se při psaní)</div>
+      <div id="email-preview-container" class="email-frame">
+        <!-- Rendered live -->
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast">✅ HTML kód byl zkopírován do schránky!</div>
+
+  <script>
+    let photoDataUrl = null;
+
+    function handleImage(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        photoDataUrl = e.target.result;
+        updatePreview();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function generateFullHTML() {
+      const issue = document.getElementById('inp-issue').value;
+      const hook = document.getElementById('inp-hook').value;
+      const introText = document.getElementById('inp-intro-text').value.replace(/\n/g, '<br>');
+      const topicTitle = document.getElementById('inp-topic-title').value;
+      const topicPerex = document.getElementById('inp-topic-perex').value;
+      
+      const n1Title = document.getElementById('inp-n1-title').value;
+      const n1Desc  = document.getElementById('inp-n1-desc').value;
+      const n2Title = document.getElementById('inp-n2-title').value;
+      const n2Desc  = document.getElementById('inp-n2-desc').value;
+
+      const t1Title = document.getElementById('inp-t1-title').value;
+      const t1Desc  = document.getElementById('inp-t1-desc').value;
+      const t2Title = document.getElementById('inp-t2-title').value;
+      const t2Desc  = document.getElementById('inp-t2-desc').value;
+
+      const quoteText = document.getElementById('inp-quote-text').value;
+      const quoteAuthor = document.getElementById('inp-quote-author').value;
+
+      const photoHtml = photoDataUrl 
+        ? `<img src="${photoDataUrl}" width="528" style="border-radius:12px;width:100%;max-width:100%;" alt="Tým Chytrá" />`
+        : `<div style="background:linear-gradient(135deg,#192231,#2a3a52);border-radius:12px;height:140px;display:flex;align-items:center;justify-content:center;text-align:center;"><span style="color:#9E76F0;font-size:13px;">📸 Nahrát fotku v levém panelu</span></div>`;
+
+      return `<!DOCTYPE html>
+<html lang="cs">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Newsletter Chytrá organizace</title>
   <style>
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; }
     body { margin: 0 !important; padding: 0 !important; background-color: #f4f4f0; font-family: 'Segoe UI', Arial, sans-serif; }
     * { box-sizing: border-box; }
-
     @media screen and (max-width: 600px) {
       .email-container { width: 100% !important; }
       .col-half { display: block !important; width: 100% !important; padding: 0 !important; }
       .col-half + .col-half { margin-top: 16px; }
       .section-pad { padding: 24px 20px !important; }
-      .hero-title { font-size: 22px !important; }
-      .hide-mobile { display: none !important; }
     }
   </style>
 </head>
@@ -27,14 +403,9 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f0;">
 <tr><td align="center" style="padding: 24px 12px;">
 
-<!-- ══════════════════════════════════════════
-     HLAVNÍ KONTEJNER
-══════════════════════════════════════════ -->
 <table class="email-container" role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;background-color:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.10);">
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     HEADER — logo + číslo + datum
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- HEADER -->
 <tr>
   <td style="background-color:#192231;padding:28px 36px 24px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -46,17 +417,15 @@
                 <div style="width:42px;height:42px;background:#FDD801;border-radius:50%;text-align:center;line-height:42px;font-size:20px;">💡</div>
               </td>
               <td style="vertical-align:middle;padding-left:11px;">
-                <!-- ✏️ EDITUJ: Název firmy -->
-                <div style="font-size:19px;font-weight:700;color:#fff;letter-spacing:0.2px;line-height:1.1;">Chytrá organizace</div>
+                <div style="font-size:19px;font-weight:700;color:#fff;line-height:1.1;">Chytrá organizace</div>
                 <div style="font-size:10px;color:#9E76F0;letter-spacing:2px;text-transform:uppercase;margin-top:3px;">Jeden systém pro všechny</div>
               </td>
             </tr>
           </table>
         </td>
         <td align="right" style="vertical-align:middle;">
-          <!-- ✏️ EDITUJ: Měsíc a číslo vydání -->
           <div style="font-size:10px;color:#9E76F0;letter-spacing:1.5px;text-transform:uppercase;">VIP Newsletter</div>
-          <div style="font-size:15px;font-weight:700;color:#FDD801;margin-top:2px;">Září 2026 · č. 01</div>
+          <div style="font-size:14px;font-weight:700;color:#FDD801;margin-top:2px;">${escapeHtml(issue)}</div>
         </td>
       </tr>
     </table>
@@ -64,39 +433,16 @@
   </td>
 </tr>
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     ÚVOD — Slovo od Kristýny (VIRAL COPY)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- ÚVOD KRISTÝNA -->
 <tr>
   <td class="section-pad" style="padding:36px 36px 28px;">
     <div style="margin-bottom:14px;">
       <span style="background:#FDD801;color:#192231;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">🔥 Slovo od Kristýny</span>
     </div>
-    
-    <!-- ✏️ EDITUJ: Nadpis úvodu (Scroll-stopping Hook) -->
-    <h1 class="hero-title" style="font-size:24px;font-weight:800;color:#192231;margin:0 0 16px;line-height:1.35;letter-spacing:-0.3px;">
-      KRADOU VÁM 2 HODINY DENNĚ. A VY O TOM MOŽNÁ ANI NEVÍTE. 🛑
-    </h1>
-    
-    <p style="font-size:15px;color:#333;line-height:1.75;margin:0 0 14px;font-weight:600;">
-      Ahoj z týmu Chytrá organizace!
-    </p>
-
-    <!-- ✏️ EDITUJ: Text úvodu (Virální storytelling) -->
-    <p style="font-size:15px;color:#444;line-height:1.75;margin:0 0 14px;">
-      Minulý týden jsem seděla s ředitelkou pobytové služby na Moravě. 
-      Byla 17:30. Kancelář už byla úplně tichá. 
-      Ale ona dál seděla u stolu. Oči zarudlé od monitoru. Překlikávala mezi 4 různými tabulkami a starým systémem.
-    </p>
-    <p style="font-size:15px;color:#444;line-height:1.75;margin:0 0 14px;">
-      Řekla mi větu, ze které mrazí: <em>„Šla jsem do sociálních služeb pomáhat lidem. Ale 60 % času trávím jako administrativní stroj."</em>
-    </p>
-    <p style="font-size:15px;color:#444;line-height:1.75;margin:0 0 16px;">
-      Právě proto jsme vytvořili <strong>Chytrou organizaci</strong>. Abychom vrátili sociálním pracovníkům čas na to, co má skutečný smysl — na klienty.
-    </p>
-
-    <!-- Podpis -->
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;">
+    <h1 style="font-size:24px;font-weight:800;color:#192231;margin:0 0 16px;line-height:1.35;">${escapeHtml(hook)}</h1>
+    <p style="font-size:15px;color:#333;line-height:1.75;margin:0 0 14px;font-weight:600;">Ahoj z týmu Chytrá organizace!</p>
+    <p style="font-size:15px;color:#444;line-height:1.75;margin:0 0 16px;">${escapeHtml(introText)}</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;">
       <tr>
         <td style="vertical-align:middle;">
           <div style="width:48px;height:48px;background:linear-gradient(135deg,#9E76F0,#192231);border-radius:50%;text-align:center;line-height:48px;font-size:20px;font-weight:700;color:#FDD801;">K</div>
@@ -110,209 +456,149 @@
   </td>
 </tr>
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     TÉMA ČÍSLA — hlavní "minutovka" karta
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- TÉMA ČÍSLA -->
 <tr>
   <td style="padding:0 36px 28px;">
     <div style="margin-bottom:14px;">
       <span style="background:#192231;color:#FDD801;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">🧠 Téma čísla</span>
     </div>
-    
-    <div style="background:linear-gradient(135deg,#192231 0%,#1e2d45 100%);border-radius:14px;padding:32px;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(158,118,240,0.12);pointer-events:none;"></div>
-
-      <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0 0 12px;line-height:1.35;position:relative;">
-        Jak automatizace dokumentace chrání tým před vyhořením
-      </h2>
-      <p style="font-size:14px;color:#EAEAEA;line-height:1.7;margin:0 0 22px;position:relative;">
-        Chaos v výkaznictví a neustálé dohledávání podkladů pro inspekci MPSV jsou primární příčinou chronického stresu na pracovišti. Podívejte se, jak 1 moderní ekosystém nahradí 4 zastaralé programy.
-      </p>
-      
-      <a href="https://www.chytraorganizace.cz" style="display:inline-block;background:#FDD801;color:#192231;font-size:13px;font-weight:700;text-decoration:none;padding:12px 28px;border-radius:50px;letter-spacing:0.4px;">
-        Přečíst celý článek →
-      </a>
+    <div style="background:linear-gradient(135deg,#192231 0%,#1e2d45 100%);border-radius:14px;padding:32px;">
+      <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0 0 12px;">${escapeHtml(topicTitle)}</h2>
+      <p style="font-size:14px;color:#EAEAEA;line-height:1.7;margin:0 0 22px;">${escapeHtml(topicPerex)}</p>
+      <a href="https://www.chytraorganizace.cz" style="display:inline-block;background:#FDD801;color:#192231;font-size:13px;font-weight:700;text-decoration:none;padding:12px 28px;border-radius:50px;">Přečíst celý článek →</a>
     </div>
   </td>
 </tr>
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     NOVINKY V SYSTÉMU — 2 karty vedle sebe
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<tr>
-  <td style="padding:0 36px 28px;">
-    <div style="margin-bottom:6px;">
-      <span style="background:#9E76F0;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">⚡ Co je nového v systému</span>
-    </div>
-    <p style="font-size:13px;color:#777;margin:8px 0 16px;">Vylepšení pro rychlejší vykazování a klidnější inspekce</p>
-
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      <tr>
-
-        <!-- KARTA 1 -->
-        <td class="col-half" width="48%" style="vertical-align:top;padding-right:8px;">
-          <div style="border:1px solid #EAEAEA;border-radius:12px;overflow:hidden;">
-            <div style="background:linear-gradient(135deg,#192231,#2d3a4d);height:120px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;">
-              <div>
-                <div style="font-size:32px;margin-bottom:4px;">📊</div>
-                <div style="font-size:10px;color:#FDD801;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Nový modul</div>
-              </div>
-            </div>
-            <div style="padding:18px 16px;">
-              <h3 style="font-size:14px;font-weight:700;color:#192231;margin:0 0 8px;line-height:1.4;">Smart Výkazy péče na 1 klik</h3>
-              <p style="font-size:13px;color:#666;line-height:1.6;margin:0 0 14px;">Automatické generování podkladů pro dotační řízení a výkazy dotací bez chyb.</p>
-              <a href="https://www.chytraorganizace.cz" style="display:inline-block;background:#9E76F0;color:#fff;font-size:12px;font-weight:700;text-decoration:none;padding:8px 18px;border-radius:50px;">Vyzkoušet</a>
-            </div>
-          </div>
-        </td>
-
-        <td class="col-half" width="4%" style="font-size:0;line-height:0;">&nbsp;</td>
-        
-        <!-- KARTA 2 -->
-        <td class="col-half" width="48%" style="vertical-align:top;padding-left:8px;">
-          <div style="border:1px solid #EAEAEA;border-radius:12px;overflow:hidden;">
-            <div style="background:linear-gradient(135deg,#1a1030,#2d1f50);height:120px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;">
-              <div>
-                <div style="font-size:32px;margin-bottom:4px;">🤖</div>
-                <div style="font-size:10px;color:#FDD801;letter-spacing:1px;text-transform:uppercase;font-weight:700;">AI Asistent</div>
-              </div>
-            </div>
-            <div style="padding:18px 16px;">
-              <h3 style="font-size:14px;font-weight:700;color:#192231;margin:0 0 8px;line-height:1.4;">AI Návrh Individuálního plánu</h3>
-              <p style="font-size:13px;color:#666;line-height:1.6;margin:0 0 14px;">Systém předpřipraví návrh IP na základě zadaných potřeb. Ušetří 70 % času.</p>
-              <a href="https://www.chytraorganizace.cz" style="display:inline-block;background:#9E76F0;color:#fff;font-size:12px;font-weight:700;text-decoration:none;padding:8px 18px;border-radius:50px;">Vyzkoušet</a>
-            </div>
-          </div>
-        </td>
-
-      </tr>
-    </table>
-  </td>
-</tr>
-
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     TIP MĚSÍCE — Auditing checklist
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-<tr>
-  <td style="padding:0 36px 28px;">
-    <div style="text-align:center;margin-bottom:6px;">
-      <span style="background:#FDD801;color:#192231;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">💡 Tip měsíce</span>
-    </div>
-    <h2 style="font-size:18px;font-weight:700;color:#192231;text-align:center;margin:10px 0 4px;">4 body, které zkontrolovat před inspekci MPSV</h2>
-    <p style="font-size:13px;color:#777;text-align:center;margin:0 0 20px;">Rychlý audit pro klidný spánek celého vedení</p>
-
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      <tr>
-        <td class="col-half" width="48%" style="vertical-align:top;padding-bottom:12px;padding-right:6px;">
-          <div style="border:1.5px solid #EAEAEA;border-radius:12px;padding:18px 16px;text-align:center;">
-            <div style="width:36px;height:36px;background:#9E76F0;border-radius:8px;margin:0 auto 10px;text-align:center;line-height:36px;font-size:16px;font-weight:700;color:#fff;">1</div>
-            <div style="font-size:13px;font-weight:700;color:#192231;margin-bottom:4px;">Aktualita IP</div>
-            <div style="font-size:12px;color:#666;line-height:1.5;">Jsou všechny individuální plány podepsané a revidované v termínu?</div>
-          </div>
-        </td>
-        <td class="col-half" width="4%" style="font-size:0;">&nbsp;</td>
-        <td class="col-half" width="48%" style="vertical-align:top;padding-bottom:12px;padding-left:6px;">
-          <div style="border:1.5px solid #EAEAEA;border-radius:12px;padding:18px 16px;text-align:center;">
-            <div style="width:36px;height:36px;background:#9E76F0;border-radius:8px;margin:0 auto 10px;text-align:center;line-height:36px;font-size:16px;font-weight:700;color:#fff;">2</div>
-            <div style="font-size:13px;font-weight:700;color:#192231;margin-bottom:4px;">Průběžná péče</div>
-            <div style="font-size:12px;color:#666;line-height:1.5;">Záznamy jsou doplňovány denně v reálném čase, ne zpětně.</div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="col-half" width="48%" style="vertical-align:top;padding-right:6px;">
-          <div style="border:1.5px solid #EAEAEA;border-radius:12px;padding:18px 16px;text-align:center;">
-            <div style="width:36px;height:36px;background:#9E76F0;border-radius:8px;margin:0 auto 10px;text-align:center;line-height:36px;font-size:16px;font-weight:700;color:#fff;">3</div>
-            <div style="font-size:13px;font-weight:700;color:#192231;margin-bottom:4px;">Smlouvy & Sazebník</div>
-            <div style="font-size:12px;color:#666;line-height:1.5;">Smlouvy přesně odpovídají aktuální metodice a sazebníku úhrad.</div>
-          </div>
-        </td>
-        <td class="col-half" width="4%" style="font-size:0;">&nbsp;</td>
-        <td class="col-half" width="48%" style="vertical-align:top;padding-left:6px;">
-          <div style="border:1.5px solid #EAEAEA;border-radius:12px;padding:18px 16px;text-align:center;">
-            <div style="width:36px;height:36px;background:#9E76F0;border-radius:8px;margin:0 auto 10px;text-align:center;line-height:36px;font-size:16px;font-weight:700;color:#fff;">4</div>
-            <div style="font-size:13px;font-weight:700;color:#192231;margin-bottom:4px;">Stížnosti & Rizika</div>
-            <div style="font-size:12px;color:#666;line-height:1.5;">Protokol stížností je snadno dostupný pro celou službu.</div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </td>
-</tr>
-
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     HLAS KLIENTA — Social proof
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- NOVINKY -->
 <tr>
   <td style="padding:0 36px 28px;">
     <div style="margin-bottom:14px;">
-      <span style="background:#EAEAEA;color:#192231;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">⭐ Hlas z praxe</span>
+      <span style="background:#9E76F0;color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">⚡ Co je nového v systému</span>
     </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="col-half" width="48%" style="vertical-align:top;padding-right:8px;">
+          <div style="border:1px solid #EAEAEA;border-radius:12px;padding:18px;">
+            <div style="font-size:30px;margin-bottom:8px;">📊</div>
+            <h3 style="font-size:14px;font-weight:700;color:#192231;margin:0 0 6px;">${escapeHtml(n1Title)}</h3>
+            <p style="font-size:13px;color:#666;line-height:1.5;margin:0;">${escapeHtml(n1Desc)}</p>
+          </div>
+        </td>
+        <td class="col-half" width="4%">&nbsp;</td>
+        <td class="col-half" width="48%" style="vertical-align:top;padding-left:8px;">
+          <div style="border:1px solid #EAEAEA;border-radius:12px;padding:18px;">
+            <div style="font-size:30px;margin-bottom:8px;">🤖</div>
+            <h3 style="font-size:14px;font-weight:700;color:#192231;margin:0 0 6px;">${escapeHtml(n2Title)}</h3>
+            <p style="font-size:13px;color:#666;line-height:1.5;margin:0;">${escapeHtml(n2Desc)}</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- CHECKLIST -->
+<tr>
+  <td style="padding:0 36px 28px;">
+    <div style="text-align:center;margin-bottom:14px;">
+      <span style="background:#FDD801;color:#192231;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;">💡 Tip měsíce</span>
+    </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="col-half" width="48%" style="vertical-align:top;padding-right:6px;padding-bottom:12px;">
+          <div style="border:1.5px solid #EAEAEA;border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:13px;font-weight:700;color:#192231;margin-bottom:4px;">1. ${escapeHtml(t1Title)}</div>
+            <div style="font-size:12px;color:#666;">${escapeHtml(t1Desc)}</div>
+          </div>
+        </td>
+        <td class="col-half" width="4%">&nbsp;</td>
+        <td class="col-half" width="48%" style="vertical-align:top;padding-left:6px;padding-bottom:12px;">
+          <div style="border:1.5px solid #EAEAEA;border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:13px;font-weight:700;color:#192231;margin-bottom:4px;">2. ${escapeHtml(t2Title)}</div>
+            <div style="font-size:12px;color:#666;">${escapeHtml(t2Desc)}</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- HLAS Z PRAXE -->
+<tr>
+  <td style="padding:0 36px 28px;">
     <div style="background:linear-gradient(135deg,#faf7ff,#fffdf0);border-radius:14px;padding:28px;border:1px solid #EAEAEA;">
-      <div style="font-family:Georgia,serif;font-size:48px;color:#9E76F0;line-height:0.5;margin-bottom:12px;opacity:0.4;">"</div>
-      <p style="font-size:15px;color:#192231;line-height:1.65;margin:0 0 18px;font-style:italic;font-weight:500;">
-        Poprvé za 8 let v pozici ředitelky odcházím v pátek v 15:30 s čistou hlavou. Všechny podklady máme v jednom systému a inspekce proběhla bez jediného nálezu.
-      </p>
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td style="vertical-align:middle;">
-            <div style="width:40px;height:40px;background:#9E76F0;border-radius:50%;text-align:center;line-height:40px;font-size:16px;font-weight:700;color:#fff;">M</div>
-          </td>
-          <td style="vertical-align:middle;padding-left:12px;">
-            <div style="font-size:13px;font-weight:700;color:#192231;">Mgr. Marie Horáková</div>
-            <div style="font-size:12px;color:#9E76F0;">Ředitelka · Domov sv. Jiří, Brno</div>
-          </td>
-        </tr>
-      </table>
+      <p style="font-size:15px;color:#192231;line-height:1.65;margin:0 0 16px;font-style:italic;font-weight:500;">"${escapeHtml(quoteText)}"</p>
+      <div style="font-size:13px;font-weight:700;color:#192231;">${escapeHtml(quoteAuthor)}</div>
     </div>
   </td>
 </tr>
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     CTA — Demo tlačítko
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- FOTKA -->
+<tr>
+  <td style="padding:0 36px 32px;">
+    ${photoHtml}
+  </td>
+</tr>
+
+<!-- CTA -->
 <tr>
   <td style="padding:28px 36px 36px;" align="center">
-    <h2 style="font-size:22px;font-weight:800;color:#192231;margin:0 0 10px;letter-spacing:-0.3px;">
-      CHCETE UŠETŘIT 2 HODINY DENNĚ V CELÉM TÝMU?
-    </h2>
-    <p style="font-size:14px;color:#666;line-height:1.6;margin:0 0 24px;max-width:400px;margin-left:auto;margin-right:auto;">
-      Domluvte si 30minutové ukázkové demo zdarma. Ukážeme vám přesný návod na míru vaší organizaci.
-    </p>
-    
-    <a href="https://www.chytraorganizace.cz/demo" style="display:inline-block;background:linear-gradient(135deg,#FDD801,#f0ca00);color:#192231;font-size:15px;font-weight:800;text-decoration:none;padding:16px 42px;border-radius:50px;letter-spacing:0.4px;box-shadow:0 6px 24px rgba(253,216,1,0.4);">
-      🚀 Vyzkoušet demo zdarma →
-    </a>
-    <p style="font-size:11px;color:#999;margin:14px 0 0;">Bez závazků · Bez nutnosti instalace · Ukázka do 30 minut</p>
+    <h2 style="font-size:22px;font-weight:800;color:#192231;margin:0 0 10px;">CHCETE UŠETŘIT 2 HODINY DENNĚ V CELÉM TÝMU?</h2>
+    <p style="font-size:14px;color:#666;margin:0 0 24px;">Domluvte si 30minutové ukázkové demo zdarma.</p>
+    <a href="https://www.chytraorganizace.cz/demo" style="display:inline-block;background:linear-gradient(135deg,#FDD801,#f0ca00);color:#192231;font-size:15px;font-weight:800;text-decoration:none;padding:16px 42px;border-radius:50px;">🚀 Vyzkoušet demo zdarma →</a>
   </td>
 </tr>
 
-<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     ZÁPATÍ — footer
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<!-- FOOTER -->
 <tr>
-  <td style="background-color:#192231;padding:28px 36px;text-align:center;border-radius:0 0 16px 16px;">
-    <div style="margin-bottom:12px;">
-      <span style="font-size:16px;font-weight:700;color:#fff;">💡 Chytrá organizace</span>
-    </div>
-    <p style="font-size:12px;color:#9E76F0;margin:0 0 6px;">
-      <a href="https://www.chytraorganizace.cz" style="color:#FDD801;text-decoration:none;font-weight:600;">www.chytraorganizace.cz</a>
-      &nbsp;·&nbsp;
-      <a href="tel:+420778707176" style="color:#9E76F0;text-decoration:none;">+420 778 707 176</a>
-    </p>
-    <div style="height:1px;background:#2d3a4d;margin:16px 0;"></div>
-    <p style="font-size:11px;color:#666;line-height:1.7;margin:0;">
-      Tento newsletter dostáváte jako registrovaná organizace v systému Chytrá organizace.<br />
-      <a href="*|UNSUB|*" style="color:#888;text-decoration:underline;">Odhlásit odběr</a>
-      &nbsp;·&nbsp;
-      <a href="https://www.chytraorganizace.cz/gdpr" style="color:#888;text-decoration:underline;">Ochrana osobních údajů</a>
-    </p>
+  <td style="background-color:#192231;padding:28px 36px;text-align:center;">
+    <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">💡 Chytrá organizace</div>
+    <p style="font-size:12px;color:#9E76F0;margin:0;"><a href="https://www.chytraorganizace.cz" style="color:#FDD801;text-decoration:none;">www.chytraorganizace.cz</a></p>
   </td>
 </tr>
 
 </table>
 </td></tr>
 </table>
+</body>
+</html>`;
+    }
 
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function updatePreview() {
+      document.getElementById('email-preview-container').innerHTML = generateFullHTML();
+    }
+
+    function copyHTML() {
+      const html = generateFullHTML();
+      navigator.clipboard.writeText(html).then(() => {
+        showToast("✅ HTML kód newsletteru byl zkopírován do schránky!");
+      });
+    }
+
+    function downloadHTML() {
+      const html = generateFullHTML();
+      const blob = new Blob([html], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'newsletter.html';
+      a.click();
+      showToast("📥 Stahuji newsletter.html");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Init
+    updatePreview();
+  </script>
 </body>
 </html>
